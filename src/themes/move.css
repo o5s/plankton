@@ -1,0 +1,29 @@
+[data-theme="move"] {
+  & .input {
+    @apply input-bordered border-1.5;
+  }
+}
+
+[data-scope="toast"] {
+  & [data-part="group"] {
+    @apply toast;
+  }
+
+  & [data-part="root"] {
+    @apply alert w-auto;
+
+    &[data-type="info"] {
+      @apply alert-info;
+    }
+    &[data-type="error"] {
+      @apply alert-error;
+    }
+    &[data-type="success"] {
+      @apply alert-success;
+    }
+    &[data-type="custom"] {
+    }
+    &[data-type="loading"] {
+    }
+  }
+}

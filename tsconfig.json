@@ -1,9 +1,7 @@
 {
   "extends": "@tsconfig/vite-react/tsconfig.json",
   "compilerOptions": {
-    "module": "CommonJS",
-    "types": ["vite/client"],
-    "useDefineForClassFields": true,
+    "types": ["vite/client"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

@@ -1,23 +1,13 @@
-import type { StorybookViteConfig } from '@storybook/builder-vite';
+import type { StorybookConfig } from "@storybook/react-vite";
 
-const config: StorybookViteConfig = {
+const config: StorybookConfig = {
   addons: [
+    "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
-    "@storybook/addon-links",
   ],
-  core: {
-    builder: '@storybook/builder-vite',
-  },
-  features: {
-    storyStoreV7: true,
-  },
-  framework: '@storybook/react',
-  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(ts|tsx)'],
-  async viteFinal(config, { configType }) {
-    // customize the Vite config here
-    return config;
-  },
+  docs: { autodocs: "tag" },
+  framework: "@storybook/react-vite",
+  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(ts|tsx)"],
 };
-
 export default config;

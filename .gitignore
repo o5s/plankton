@@ -3,29 +3,21 @@
 /node_modules
 
 # Logs
-logs
 *.log
-
-# Yarn
-.yarn/*
-!.yarn/cache
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+logs
 
 # OS
 .DS_Store
 
 # IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
 *.launch
-.settings/
 *.sublime-workspace
+.c9/
+.classpath
+.direnv/
+.project
+.settings/
+/.idea
 
 # IDE - VSCode
 .vscode/*
