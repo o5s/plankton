@@ -8,7 +8,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/20/solid";
 import { Placement } from "@zag-js/toast";
-import { createContext, useContext, forwardRef } from "react";
+import { createContext, useContext, forwardRef, useId } from "react";
 import { useActor, useMachine, normalizeProps } from "@zag-js/react";
 
 type ToastApi = ReturnType<typeof groupConnect>;
@@ -52,16 +52,14 @@ const ToastContext = createContext<ToastApi>({} as any);
 export const useToast = () => useContext(ToastContext);
 
 export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
-  const [state, send] = useMachine(toast.group.machine({ id: "toast" }));
+  const [state, send] = useMachine(toast.group.machine({ id: useId() }));
+
   const api = toast.group.connect(state, send, normalizeProps);
 
   return (
     <ToastContext.Provider value={api}>
       {Object.entries(api.toastsByPlacement).map(([placement, toasts]) => (
-        <div
-          key={placement}
-          {...api.getGroupProps({ placement: placement as Placement })}
-        >
+        <div key={placement} {...api.getGroupProps({ placement: placement as Placement })}>
           {toasts.map((toast) => (
             <Toast key={toast.id} actor={toast} />
           ))}

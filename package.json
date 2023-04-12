@@ -23,7 +23,10 @@
   "dependencies": {
     "@heroicons/react": "^2.0.17",
     "@zag-js/combobox": "^0.3.1",
+    "@zag-js/dialog": "^0.5.0",
     "@zag-js/react": "^0.3.12",
+    "@zag-js/select": "^0.2.1",
+    "@zag-js/tabs": "^0.5.0",
     "@zag-js/toast": "^0.2.16"
   },
   "devDependencies": {

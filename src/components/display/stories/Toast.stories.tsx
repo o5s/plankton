@@ -1,7 +1,7 @@
 import { useToast, ToastProvider, ToastOptions } from "../Toast";
 
 export default {
-  title: "Displays/Toast",
+  title: "Display/Toast",
   decorators: [
     (Story: any) => (
       <ToastProvider>
