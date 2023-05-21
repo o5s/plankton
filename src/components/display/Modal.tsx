@@ -1,33 +1,44 @@
 import * as dialog from "@zag-js/dialog";
-import { useMachine, normalizeProps, Portal } from "@zag-js/react";
 import { useId } from "react";
+import { useMachine, normalizeProps, Portal } from "@zag-js/react";
 
-export const Dialog = () => {
-  const [state, send] = useMachine(dialog.machine({ id: useId() }));
-
+export const Modal: React.FC<ModalProps> = ({ children, trigger, ...props }) => {
+  const [state, send] = useMachine(dialog.machine({ id: useId(), ...props }));
   const api = dialog.connect(state, send, normalizeProps);
 
   return (
     <>
-      <button {...api.triggerProps}>Open Dialog</button>
-      {api.isOpen && (
-        <Portal>
-          <div {...api.backdropProps} />
-          <div {...api.containerProps}>
-            <div {...api.contentProps}>
-              <h2 {...api.titleProps}>Edit profile</h2>
-              <p {...api.descriptionProps}>
-                Make changes to your profile here. Click save when you are done.
-              </p>
-              <div>
-                <input placeholder="Enter name..." />
-                <button>Save</button>
-              </div>
-              <button {...api.closeTriggerProps}>Close</button>
-            </div>
+      {trigger(api.triggerProps)}
+      <Portal>
+        <input type="checkbox" className="modal-toggle" checked={api.isOpen} readOnly />
+        <div {...api.backdropProps} className="modal">
+          <div {...api.contentProps} className="modal-box">
+            {children}
+            <footer className="modal-action">
+              <button {...api.closeTriggerProps} className="btn">
+                Close
+              </button>
+            </footer>
           </div>
-        </Portal>
-      )}
+        </div>
+      </Portal>
     </>
   );
 };
+export interface ModalProps
+  extends Pick<
+    dialog.Context,
+    | "closeOnEsc"
+    | "closeOnOutsideClick"
+    | "modal"
+    | "onClose"
+    | "onEsc"
+    | "onOpen"
+    | "onOutsideClick"
+    | "open"
+    | "preventScroll"
+    | "role"
+  > {
+  children: React.ReactNode;
+  trigger: (props: JSX.IntrinsicElements["button"]) => React.ReactNode;
+}

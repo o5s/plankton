@@ -1,27 +1,17 @@
 import * as select from "@zag-js/select";
+import cx from "clsx";
 import { useId } from "react";
 import { useMachine, normalizeProps, Portal } from "@zag-js/react";
 
-const selectData = [
-  { label: "Nigeria", value: "NG" },
-  { label: "Japan", value: "JP" },
-  { label: "Korea", value: "KO" },
-  { label: "Kenya", value: "KE" },
-  { label: "United Kingdom", value: "UK" },
-  { label: "Ghana", value: "GH" },
-  { label: "Uganda", value: "UG" },
-];
-
-export function Select() {
-  const [state, send] = useMachine(select.machine({ id: useId() }));
-
+export const Select: React.FC<SelectProps> = ({ options, part, ...props }) => {
+  const [state, send] = useMachine(select.machine({ id: useId(), ...props }));
   const api = select.connect(state, send, normalizeProps);
 
   return (
     <div>
       {/* Hidden select */}
       <select {...api.hiddenSelectProps}>
-        {selectData.map((option) => (
+        {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
@@ -29,20 +19,27 @@ export function Select() {
       </select>
 
       <button
-        className="select select-bordered inline-flex items-center"
-        type="button"
         {...api.triggerProps}
+        className={cx("select items-center data-[invalid]:select-error", part?.trigger?.className)}
       >
         {api.selectedOption?.label ?? "Select option"}
       </button>
 
       <Portal>
         <div {...api.positionerProps}>
-          <ul {...api.contentProps}>
-            {selectData.map(({ label, value }) => (
-              <li key={value} {...api.getOptionProps({ label, value })}>
-                <span>{label}</span>
-                {value === api.selectedOption?.value && "✓"}
+          <ul
+            {...api.contentProps}
+            className={cx("menu bg-base-100", !api.isOpen && "hidden", part?.content?.className)}
+          >
+            {options.map((option) => (
+              <li
+                {...api.getOptionProps(option)}
+                className={cx(option.disabled && "disabled", part?.option?.className)}
+                key={option.value}
+              >
+                <a className={cx(option.value === api.selectedOption?.value && "active")}>
+                  {option.label}
+                </a>
               </li>
             ))}
           </ul>
@@ -50,4 +47,21 @@ export function Select() {
       </Portal>
     </div>
   );
-}
+};
+export type SelectProps = Pick<
+  select.Context,
+  "disabled" | "invalid" | "name" | "onChange" | "onClose" | "onHighlight" | "onOpen" | "readOnly"
+> & {
+  options: SelectOption[];
+  part?: {
+    content?: { className?: string };
+    option?: { className?: string };
+    trigger?: { className?: string };
+  };
+};
+
+type SelectOption = {
+  disabled?: boolean;
+  label: string;
+  value: string;
+};

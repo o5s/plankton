@@ -1,23 +1,34 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Select } from "../Select";
+import { Select, SelectProps } from "../Select";
 
-// More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
-const meta = {
-  title: "Controls/Select",
+const meta: Meta<typeof Select> = {
   component: Select,
-  tags: ["autodocs"],
-} satisfies Meta<typeof Select>;
-
+  title: "Controls/Select",
+};
 export default meta;
+
 type Story = StoryObj<typeof meta>;
 
-const items: Array<{ name: string; value: string }> = [
-  { name: "Brad Pitt", value: "brad" },
-  { name: "Leonardo DiCaprio", value: "leo" },
+const options: SelectProps["options"] = [
+  { label: "Brad Pitt", value: "bradpitt" },
+  { label: "Leonardo DiCaprio", value: "leonardo", disabled: true },
 ];
 
-// More on writing stories with args: https://storybook.js.org/docs/7.0/react/writing-stories/args
-export const Primary: Story = {
-  args: {},
+export const Default: Story = {
+  args: { options },
+};
+
+export const Disabled: Story = {
+  args: { ...Default.args, disabled: true },
+};
+
+export const Custom: Story = {
+  args: {
+    ...Default.args,
+    part: {
+      content: { className: "border shadow-xl" },
+      trigger: { className: "select-bordered" },
+    },
+  },
 };

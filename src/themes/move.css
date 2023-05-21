@@ -4,72 +4,26 @@
   }
 }
 
+/* TODO: in the future we may want to move them to tailwind as a plugin */
 [data-scope="combobox"] {
-  & [data-part="control"] {
-    @apply select select-bordered border-1.5;
+  /* & [data-part="control"] {
     &[data-focus] {
       @apply border-primary;
       & [data-part="input"] {
         @apply outline-none;
       }
     }
-  }
-  & [data-part="content"] {
+  } */
+  /* & [data-part="content"] {
     @apply bg-white border-1.5 p-1;
-  }
-  & [data-part="option"] {
+  } */
+  /* & [data-part="option"] {
     @apply py-2 px-4;
     &:hover {
       @apply bg-neutral-content;
     }
   }
-}
-
-[data-scope="select"] {
-  & [data-part="content"] {
-    @apply bg-white border-1.5 p-1;
-  }
-  & [data-part="option"] {
-    @apply py-2 px-4 flex gap-4 items-center justify-between;
-    &:hover {
-      @apply bg-neutral-content;
-    }
-  }
   & [data-part="trigger"] {
-    @apply select select-bordered inline-flex items-center;
-  }
-}
-
-[data-scope="tabs"] {
-  & [data-part="tablist"] {
-    @apply tabs;
-  }
-  & [data-part="trigger"] {
-    @apply tab tab-bordered;
-    &[data-selected] {
-      @apply tab-active;
-    }
-  }
-}
-
-[data-scope="toast"] {
-  & [data-part="group"] {
-    @apply toast;
-  }
-  & [data-part="root"] {
-    @apply alert w-auto;
-    &[data-type="info"] {
-      @apply alert-info;
-    }
-    &[data-type="error"] {
-      @apply alert-error;
-    }
-    &[data-type="success"] {
-      @apply alert-success;
-    }
-    &[data-type="custom"] {
-    }
-    &[data-type="loading"] {
-    }
-  }
+    @apply absolute right-0 inset-y-0 pr-10;
+  } */
 }

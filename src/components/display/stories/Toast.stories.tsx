@@ -1,4 +1,6 @@
-import { useToast, ToastProvider, ToastOptions } from "../Toast";
+import type { ToastOptions } from "@zag-js/toast";
+
+import { useToast, ToastProvider } from "../Toast";
 
 export default {
   title: "Display/Toast",
@@ -11,7 +13,7 @@ export default {
   ],
 };
 
-const ToastWrapper: React.FC<ToastOptions> = (props) => {
+const ToastWrapper: React.FC<Partial<ToastOptions>> = (props) => {
   const toast = useToast();
 
   const handleClick = () => {
@@ -23,7 +25,7 @@ const ToastWrapper: React.FC<ToastOptions> = (props) => {
 
   return (
     <button className="btn" onClick={handleClick}>
-      Fire
+      Click me
     </button>
   );
 };

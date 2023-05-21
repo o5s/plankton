@@ -1,33 +1,55 @@
 import * as tabs from "@zag-js/tabs";
 import cx from "clsx";
-import { useMachine, normalizeProps } from "@zag-js/react";
 import { useId } from "react";
+import { useMachine, normalizeProps } from "@zag-js/react";
 
-const data = [
-  { value: "item-1", label: "Item one", content: "Item one content" },
-  { value: "item-2", label: "Item two", content: "Item two content" },
-  { value: "item-3", label: "Item three", content: "Item three content" },
-];
-
-export function Tabs() {
-  const [state, send] = useMachine(tabs.machine({ id: useId() }));
-
+export function Tabs({ items, part, ...props }: TabsProps) {
+  const [state, send] = useMachine(tabs.machine({ id: useId(), ...props }));
   const api = tabs.connect(state, send, normalizeProps);
 
   return (
-    <div {...api.rootProps}>
-      <div {...api.tablistProps}>
-        {data.map((item) => (
-          <button {...api.getTriggerProps({ value: item.value })} key={item.value}>
-            {item.label}
+    <div {...api.rootProps} className={part?.root?.className}>
+      <div {...api.tablistProps} className={cx("tabs", part?.tablist?.className)}>
+        {items.map((item) => (
+          <button
+            {...api.getTriggerProps({ disabled: item.disabled, value: item.value })}
+            className={cx(
+              "tab",
+              api.value === item.value && "tab-active",
+              item.disabled && "tab-disabled",
+              part?.trigger?.className,
+            )}
+            key={item.value}
+          >
+            {item.title}
           </button>
         ))}
       </div>
-      {data.map((item) => (
-        <div {...api.getContentProps({ value: item.value })} key={item.value}>
-          <p>{item.content}</p>
+      {items.map((item) => (
+        <div
+          {...api.getContentProps({ value: item.value })}
+          className={part?.content?.className}
+          key={item.value}
+        >
+          {item.content}
         </div>
       ))}
     </div>
   );
 }
+export type TabsProps = Pick<tabs.Context, "onChange" | "onFocus" | "value"> & {
+  items: TabItem[];
+  part?: {
+    content?: { className?: string };
+    root?: { className?: string };
+    tablist?: { className?: string };
+    trigger?: { className?: string };
+  };
+};
+
+type TabItem = {
+  title: React.ReactNode;
+  content: React.ReactNode;
+  disabled?: boolean;
+  value: string;
+};

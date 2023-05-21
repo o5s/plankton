@@ -2,27 +2,26 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Combobox } from "../Combobox";
 
-// More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
-const meta = {
-  title: "Controls/Combobox",
+const meta: Meta<typeof Combobox> = {
   component: Combobox,
-  tags: ["autodocs"],
-} satisfies Meta<typeof Combobox>;
-
+  title: "Controls/Combobox",
+};
 export default meta;
+
 type Story = StoryObj<typeof meta>;
 
 const items: Array<{ name: string; value: string }> = [
-  { name: "Brad Pitt", value: "brad" },
-  { name: "Leonardo DiCaprio", value: "leo" },
+  { name: "Brad Pitt", value: "bradpitt" },
+  { name: "Leonardo DiCaprio", value: "leonardo" },
 ];
 
-// More on writing stories with args: https://storybook.js.org/docs/7.0/react/writing-stories/args
-export const Primary: Story = {
-  args: {
-    getLabel: (item) => item.name,
-    getValue: (item) => item.value,
-    items,
-    children: (item) => item.name,
-  },
+export const Default: Story = {
+  render: () => (
+    <Combobox
+      displayText={(item) => item.name}
+      getKey={(value: string) => value}
+      getValue={(item) => item.value}
+      items={items}
+    />
+  ),
 };

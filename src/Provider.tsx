@@ -1,7 +1,5 @@
 import { ToastProvider } from "./components/display/Toast";
 
-const Provider: React.FC = ({ children }) => {
+export const Provider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return <ToastProvider>{children}</ToastProvider>;
 };
-
-export default Provider;
