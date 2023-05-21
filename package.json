@@ -15,7 +15,7 @@
     }
   },
   "scripts": {
-    "build": "pnpm build:lib && pnpm build:storybook",
+    "build": "npm run build:lib",
     "build:lib": "tsc && vite build",
     "build:storybook": "storybook build",
     "storybook": "storybook dev -p 6006"
