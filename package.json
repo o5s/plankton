@@ -6,11 +6,11 @@
     "dist"
   ],
   "main": "./dist/plankton.umd.js",
-  "module": "./dist/plankton.es.js",
+  "module": "./dist/plankton.mjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/plankton.es.js",
+      "import": "./dist/plankton.mjs",
       "require": "./dist/plankton.umd.js"
     }
   },
