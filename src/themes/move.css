@@ -3,27 +3,3 @@
     @apply input-bordered border-1.5;
   }
 }
-
-/* TODO: in the future we may want to move them to tailwind as a plugin */
-[data-scope="combobox"] {
-  /* & [data-part="control"] {
-    &[data-focus] {
-      @apply border-primary;
-      & [data-part="input"] {
-        @apply outline-none;
-      }
-    }
-  } */
-  /* & [data-part="content"] {
-    @apply bg-white border-1.5 p-1;
-  } */
-  /* & [data-part="option"] {
-    @apply py-2 px-4;
-    &:hover {
-      @apply bg-neutral-content;
-    }
-  }
-  & [data-part="trigger"] {
-    @apply absolute right-0 inset-y-0 pr-10;
-  } */
-}
