@@ -1,5 +1,0 @@
-[data-theme="move"] {
-  & .input {
-    @apply input-bordered border-1.5;
-  }
-}

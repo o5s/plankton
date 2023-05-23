@@ -3,7 +3,7 @@ import cx from "clsx";
 import { useId } from "react";
 import { useMachine, normalizeProps, Portal } from "@zag-js/react";
 
-export const Select: React.FC<SelectProps> = ({ options, part, ...props }) => {
+export const Select: React.FC<SelectProps> = ({ options, part, placeholder, ...props }) => {
   const [state, send] = useMachine(select.machine({ id: useId(), ...props }));
   const api = select.connect(state, send, normalizeProps);
 
@@ -22,14 +22,18 @@ export const Select: React.FC<SelectProps> = ({ options, part, ...props }) => {
         {...api.triggerProps}
         className={cx("select items-center data-[invalid]:select-error", part?.trigger?.className)}
       >
-        {api.selectedOption?.label ?? "Select option"}
+        {api.selectedOption?.label ?? placeholder}
       </button>
 
       <Portal>
-        <div {...api.positionerProps}>
+        <div {...api.positionerProps} className="z-50">
           <ul
             {...api.contentProps}
-            className={cx("menu bg-base-100", !api.isOpen && "hidden", part?.content?.className)}
+            className={cx(
+              "menu max-h-60 overflow-y-auto flex-nowrap",
+              !api.isOpen && "hidden",
+              part?.content?.className,
+            )}
           >
             {options.map((option) => (
               <li
@@ -58,6 +62,7 @@ export type SelectProps = Pick<
     option?: { className?: string };
     trigger?: { className?: string };
   };
+  placeholder?: string;
 };
 
 type SelectOption = {

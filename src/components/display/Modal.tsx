@@ -25,20 +25,19 @@ export const Modal: React.FC<ModalProps> = ({ children, trigger, ...props }) => 
     </>
   );
 };
-export interface ModalProps
-  extends Pick<
-    dialog.Context,
-    | "closeOnEsc"
-    | "closeOnOutsideClick"
-    | "modal"
-    | "onClose"
-    | "onEsc"
-    | "onOpen"
-    | "onOutsideClick"
-    | "open"
-    | "preventScroll"
-    | "role"
-  > {
+export type ModalProps = Pick<
+  dialog.Context,
+  | "closeOnEsc"
+  | "closeOnOutsideClick"
+  | "modal"
+  | "onClose"
+  | "onEsc"
+  | "onOpen"
+  | "onOutsideClick"
+  | "open"
+  | "preventScroll"
+  | "role"
+> & {
   children: React.ReactNode;
   trigger: (props: JSX.IntrinsicElements["button"]) => React.ReactNode;
-}
+};

@@ -2,11 +2,7 @@
 module.exports = {
   content: ["./src/**/*.tsx"],
   theme: {
-    extend: {
-      borderWidth: {
-        1.5: "1.5px",
-      },
-    },
+    extend: {},
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
   daisyui: {

@@ -1,9 +1,10 @@
 import * as combobox from "@zag-js/combobox";
 import cx from "clsx";
 import { useMachine, normalizeProps } from "@zag-js/react";
-import { useState, useId, useEffect, useCallback } from "react";
+import { useState, useId, useCallback, useEffect } from "react";
 
 export function Combobox<T, V>({
+  children,
   displayText,
   getKey,
   getValue,
@@ -26,8 +27,9 @@ export function Combobox<T, V>({
         setOptions(items);
       },
       onInputChange(details) {
+        // TODO: use fuzzy search
         const filtered = items.filter((item) =>
-          getKey(getValue(item)).toLowerCase().includes(details.value.toLowerCase()),
+          displayText(item).toLowerCase().includes(details.value.toLowerCase()),
         );
         setOptions(filtered.length > 0 ? filtered : items);
         props.onInputChange?.(details);
@@ -49,7 +51,7 @@ export function Combobox<T, V>({
   }, [value]);
 
   return (
-    <div>
+    <div className="combobox">
       <div {...api.rootProps}>
         <div
           {...api.controlProps}
@@ -66,24 +68,26 @@ export function Combobox<T, V>({
         </div>
       </div>
 
-      <div {...api.positionerProps}>
+      <div {...api.positionerProps} className="z-50">
         {options.length > 0 && (
-          <div>
-            <ul {...api.contentProps} className={cx("menu bg-base-100", part?.content?.className)}>
-              {options.map((item, index) => (
-                <li
-                  {...api.getOptionProps({
-                    index,
-                    label: displayText(item),
-                    value: getKey(getValue(item)),
-                  })}
-                  className={cx(part?.option?.className)}
-                >
-                  <a>{displayText(item)}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ul
+            {...api.contentProps}
+            className={cx("menu max-h-60 overflow-y-auto flex-nowrap", part?.content?.className)}
+          >
+            {options.map((item, index) => (
+              <li
+                {...api.getOptionProps({
+                  index,
+                  label: displayText(item),
+                  value: getKey(getValue(item)),
+                })}
+                className={cx(part?.option?.className)}
+                key={getKey(getValue(item))}
+              >
+                <a>{children?.(item) || displayText(item)}</a>
+              </li>
+            ))}
+          </ul>
         )}
       </div>
     </div>
@@ -100,6 +104,7 @@ export type ComboboxProps<T, V> = Pick<
   | "placeholder"
   | "readOnly"
 > & {
+  children?: (item: T) => React.ReactNode;
   displayText: (item: T) => string;
   getKey: (item: V) => string;
   getValue: (item: T) => V;
