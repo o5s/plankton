@@ -1,12 +1,11 @@
 import * as combobox from "@zag-js/combobox";
-export declare function Combobox<T, V>({ children, displayText, getKey, getValue, items, onSelect, part, value, ...props }: ComboboxProps<T, V>): import("react/jsx-runtime").JSX.Element;
-export type ComboboxProps<T, V> = Pick<combobox.Context, "autoFocus" | "disabled" | "invalid" | "name" | "onInputChange" | "openOnClick" | "placeholder" | "readOnly"> & {
-    children?: (item: T) => React.ReactNode;
-    displayText: (item: T) => string;
-    getKey: (item: V) => string;
-    getValue: (item: T) => V;
-    items: T[];
-    onSelect?: (item?: V) => void;
+export declare function Combobox({ children, onSelect, options, part, value, ...props }: ComboboxProps): import("react/jsx-runtime").JSX.Element;
+export type ComboboxProps = Pick<combobox.Context, "autoFocus" | "disabled" | "invalid" | "name" | "onInputChange" | "openOnClick" | "placeholder" | "readOnly"> & {
+    children?: (option: ComboboxOption) => React.ReactNode;
+    onSelect?: (details: {
+        value?: string;
+    }) => void;
+    options: ComboboxOption[];
     part?: {
         content?: {
             className?: string;
@@ -24,5 +23,11 @@ export type ComboboxProps<T, V> = Pick<combobox.Context, "autoFocus" | "disabled
             className?: string;
         };
     };
-    value?: V;
+    value?: string;
 };
+type ComboboxOption = {
+    label: string;
+    title?: string;
+    value: string;
+};
+export {};
