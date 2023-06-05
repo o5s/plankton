@@ -9,7 +9,7 @@ module.exports = {
     themes: [
       {
         move: {
-          ...require("daisyui/src/colors/themes")["[data-theme=corporate]"],
+          ...require("daisyui/src/theming/themes")["[data-theme=corporate]"],
           primary: "#001dac",
         },
       },
