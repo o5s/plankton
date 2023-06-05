@@ -3,7 +3,7 @@ import { useId } from "react";
 import { useMachine, normalizeProps, Portal } from "@zag-js/react";
 
 export const Modal: React.FC<ModalProps> = ({ children, trigger, ...props }) => {
-  const [state, send] = useMachine(dialog.machine({ id: useId(), ...props }));
+  const [state, send] = useMachine(dialog.machine({ id: useId() }), { context: props });
   const api = dialog.connect(state, send, normalizeProps);
 
   return (

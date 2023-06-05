@@ -4,7 +4,7 @@ import { useId } from "react";
 import { useMachine, normalizeProps, Portal } from "@zag-js/react";
 
 export const Select: React.FC<SelectProps> = ({ options, part, placeholder, ...props }) => {
-  const [state, send] = useMachine(select.machine({ id: useId(), ...props }));
+  const [state, send] = useMachine(select.machine({ id: useId() }), { context: props });
   const api = select.connect(state, send, normalizeProps);
 
   return (

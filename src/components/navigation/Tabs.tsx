@@ -4,7 +4,7 @@ import { useId } from "react";
 import { useMachine, normalizeProps } from "@zag-js/react";
 
 export function Tabs({ items, part, ...props }: TabsProps) {
-  const [state, send] = useMachine(tabs.machine({ id: useId(), ...props }));
+  const [state, send] = useMachine(tabs.machine({ id: useId() }), { context: props });
   const api = tabs.connect(state, send, normalizeProps);
 
   return (
